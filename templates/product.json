@@ -62,7 +62,7 @@
             "border_color": "rgba(255, 255, 255, 0.08)",
             "border_radius": 20,
             "background_color": "#140e1d",
-            "padding-block-start": 32,
+            "padding-block-start": 0,
             "padding-block-end": 32,
             "padding-inline-start": 32,
             "padding-inline-end": 32

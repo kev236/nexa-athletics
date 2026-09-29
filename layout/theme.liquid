@@ -83,15 +83,14 @@
           margin-top: 0;
         }
 
-        /* Neither top-aligning (image sat above the card's own border+padding)
-           nor centering (overshot into the middle of a much taller card,
-           accordion included) put the image level with the title. The
-           details card has a 1px border + 32px top padding before its
-           actual text starts, so offset the image by that same amount to
-           land its top edge inline with the title, not the card's outer box. */
+        /* Guessing the details card's rendered top padding in px was wrong
+           twice (it's computed via the theme's spacing-scale variable, not
+           a flat 32px) — so stop trying to offset the image to match it.
+           Instead removed the card's own top padding at the source (see
+           product.json) and just top-align both columns to the same grid
+           line; with no padding gap left to account for, they land level. */
         [data-template="product"] .product-information__media {
           align-self: start;
-          margin-top: 33px;
         }
       }
 
