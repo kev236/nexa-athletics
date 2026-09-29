@@ -75,6 +75,12 @@
       @media screen and (min-width: 750px) {
         [data-template="product"] media-gallery.sticky-content {
           position: static;
+          /* The theme also gives .sticky-content a negative top margin on a
+             page's first section (to make sticky content hug the header) —
+             with position back to static that just pulls the image upward
+             relative to the details column instead. Neutralize it so both
+             columns start at the same line. */
+          margin-top: 0;
         }
       }
 
