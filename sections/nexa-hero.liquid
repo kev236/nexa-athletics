@@ -137,8 +137,13 @@
 
   @media screen and (max-width: 749px) {
     .nexa-hero {
-      min-height: 92svh;
-      padding: 1.5rem 1.25rem 2.5rem;
+      /* A near-full-viewport-height box (92svh) forces object-fit: cover to crop a
+         landscape photo down to a narrow vertical sliver on tall phone screens.
+         Bound it to a portrait-friendly ratio instead so the crop stays reasonable. */
+      min-height: 0;
+      aspect-ratio: 4 / 5;
+      max-height: 640px;
+      padding: 1.5rem 1.25rem 2rem;
     }
 
     .nexa-hero__content {

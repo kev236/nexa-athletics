@@ -39,10 +39,14 @@
 </div>
 
 {% stylesheet %}
-  /* Clear padding on mobile, if not full-width */
+  /* This block now renders as a bordered/background card (see product.json),
+     not the plain edge-to-edge text the original "clear padding on mobile"
+     rule assumed — zeroing padding-inline left the title/price/buttons text
+     touching the card's inner edge with only the page margin outside it.
+     Keep a smaller but real inline padding on mobile instead of zero. */
   @media screen and (max-width: 749px) {
     .product-information.section--page-width .product-details > .group-block {
-      padding-inline: 0;
+      padding-inline: 20px;
     }
   }
 

@@ -223,6 +223,10 @@
   .nexa-contact__grid {
     display: grid;
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    /* Without this, grid stretches both columns to match the taller one —
+       the form is much longer than the "get in touch" panel, so the info
+       box was ballooning to the form's height with empty space at the bottom. */
+    align-items: start;
     gap: 4rem;
     width: 100%;
   }

@@ -25,7 +25,7 @@
                 | image_url: width: 1200
                 | image_tag:
                   widths: '360, 540, 720, 1200',
-                  sizes: '(min-width: 990px) 25vw, 50vw',
+                  sizes: '(min-width: 990px) 25vw, (min-width: 550px) 50vw, 100vw',
                   alt: coll.featured_image.alt | default: coll.title,
                   loading: 'lazy'
               }}
@@ -181,6 +181,13 @@
   @media screen and (max-width: 749px) {
     .nexa-category-grid {
       padding: 2.5rem 1.25rem;
+    }
+  }
+
+  @media screen and (max-width: 549px) {
+    .nexa-category-grid__grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 {% endstylesheet %}

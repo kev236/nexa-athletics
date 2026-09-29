@@ -30,6 +30,10 @@
 {% stylesheet %}
   .nexa-banner-wrap {
     background: #0a0710;
+    /* The banner and the product grid below both sit on the same near-black
+       background with nothing but padding between them, so they melt into
+       each other. A hairline seam makes the boundary readable. */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .nexa-banner {

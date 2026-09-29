@@ -153,12 +153,19 @@
 
   /* Mobile styles */
   @media screen and (max-width: 749px) {
+    /* Was 1 / -1 (edge-to-edge), which fought the media block's own
+       extend_media: false setting and left the image with no breathing
+       room against the page margin the details card already respects. */
     .product-information__media {
-      grid-column: 1 / -1;
+      grid-column: 2 / 3;
     }
 
     .product-details {
       grid-column: 2 / 3;
+      /* Stacked mobile layout had no gap at all between the image and the
+         details card below it — the desktop gap is implemented as padding
+         on each column, which only applies at the two-column breakpoint. */
+      padding-block-start: var(--gap, 24px);
     }
   }
 

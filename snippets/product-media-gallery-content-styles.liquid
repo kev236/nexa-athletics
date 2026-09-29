@@ -109,4 +109,21 @@
   .product-media-container--zoomable.product-media-container--image {
     cursor: zoom-in;
   }
+
+  /* Crossfade the main product image as slides scroll in/out of view, layered on
+     top of the carousel's own smooth scroll so switching images reads clearly
+     as an animation rather than an instant jump. */
+  media-gallery slideshow-slide .product-media-container {
+    transition: opacity 0.35s ease;
+  }
+
+  media-gallery slideshow-slide[aria-hidden='true'] .product-media-container {
+    opacity: 0.25;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    media-gallery slideshow-slide .product-media-container {
+      transition: none;
+    }
+  }
 {% endstylesheet %}
