@@ -529,7 +529,7 @@
         "quote_2": {
           "type": "quote",
           "settings": {
-            "text": "Ships to the Netherlands and EU \u2014 exact cost and delivery estimate are calculated at checkout."
+            "text": "Ships to the Netherlands and EU — exact cost and delivery estimate are calculated at checkout."
           }
         },
         "quote_3": {
@@ -546,7 +546,8 @@
         "quote_1",
         "quote_2",
         "quote_3"
-      ]
+      ],
+      "settings": {}
     }
   },
   "order": [

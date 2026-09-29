@@ -72,22 +72,6 @@
       </div>
 
       <script>
-        /**
-         * Sets `--header-height` and `--header-group-height` to measured values before first paint.
-         *
-         * A few CSS rules position content relative to the header at first paint — a hero sized to
-         * the remaining viewport, a transparent header's negative margin. Without a measured value
-         * those rules use the `60px` fallback from `sections/header.liquid`, and the content visibly
-         * jumps once `header.js` corrects the values after load.
-         *
-         * Measuring forces layout mid-parse, so it only runs where a consuming rule exists.
-         * Callers opt in: the transparent-header branch below, or `snippets/measure-header-heights.liquid`,
-         * which any new first-paint consumer must render too.
-         *
-         * Measures once per page; after load, header.js's ResizeObservers keep the values fresh.
-         * The group-height walk mimics calculateHeaderGroupHeight() in utilities.js — keep them
-         * in sync.
-         */
         window.measureHeaderHeights = (function () {
           let measured = false;
 
@@ -107,12 +91,6 @@
               if (element instanceof HTMLElement) headerGroupHeight += element.offsetHeight;
             }
 
-            /**
-             * A transparent header is absolutely positioned, so the loop above counts its section
-             * wrapper as 0px. When a section follows it in the group, header.liquid pushes that
-             * section down by the header's height using a margin, which offsetHeight also
-             * excludes — so the header's height has to be added back manually.
-             */
             if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
               headerGroupHeight += headerHeight;
             }
@@ -122,20 +100,10 @@
           };
         })();
 
-        /**
-         * Transparent-header rules consume the measured heights at first paint on every
-         * template, so the transparent case opts in globally here instead of per-section.
-         */
         if (document.querySelector('#header-component')?.hasAttribute('transparent')) {
           measureHeaderHeights();
         }
 
-        /**
-         * Sets `--top-row-height`, consumed by the header underlays and submenus. Deferred to a
-         * rAF so the height read doesn't force layout mid-parse, and scoped to the
-         * header, where all consumers live, so the write only invalidates the header subtree.
-         * Mimics the `--top-row-height` write in updateHeaderHeights() in utilities.js
-         */
         (function setTopRowHeight() {
           const header = document.querySelector('#header-component');
           const headerTopRow = header?.querySelector('.header__row--top');
@@ -146,12 +114,6 @@
           });
         })();
 
-        /**
-         * Sets `--transparent-header-offset-boolean` when the first section must offset itself
-         * under a transparent header. The non-offset case relies on the `0` default declared in
-         * sections/header.liquid — unlike updateTransparentHeaderOffset() in utilities.js, which
-         * re-runs on editor changes and must write '0' to reset a previously written '1'.
-         */
         (function updateTransparentHeaderOffset() {
           const header = document.querySelector('#header-component');
           const headerSection = document.querySelector('#header-group .header-section');
@@ -163,10 +125,6 @@
           }
         })();
 
-        /**
-         * Sets the initial menu style (inline menu vs. drawer) on the header component.
-         * Mimics setHeaderMenuStyle() in utilities.js
-         */
         (function setHeaderMenuStyle() {
           const headerComponent = document.querySelector('#header-component');
           if (headerComponent) {
