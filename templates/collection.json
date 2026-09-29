@@ -32,7 +32,7 @@
             "show_filter_label": false,
             "enable_sorting": true,
             "enable_grid_density": false,
-            "padding-block-start": 8,
+            "padding-block-start": 28,
             "padding-block-end": 8,
             "padding-inline-start": 0,
             "padding-inline-end": 0,
@@ -140,12 +140,68 @@
         "padding-inline-end": 0,
         "background_color": "{{ settings.color_palette.color8 }}",
         "padding-block-start": 32,
-        "padding-block-end": 100
+        "padding-block-end": 64
       }
+    },
+    "nexa_trust": {
+      "type": "nexa-trust",
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon": "eye",
+            "heading": "Built for daily use",
+            "text": "Chosen for what actually holds up through training, not just what looks good in a photo."
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon": "heart",
+            "heading": "Checked before it's listed",
+            "text": "We look at real specs and real reviews before adding anything to the store."
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon": "silhouette",
+            "heading": "Real support",
+            "text": "Questions about an order or a product? Reach out through the contact page and we'll get back to you."
+          }
+        },
+        "quote_1": {
+          "type": "quote",
+          "settings": {
+            "text": "Made to perform, not to gather dust."
+          }
+        },
+        "quote_2": {
+          "type": "quote",
+          "settings": {
+            "text": "Ships to the Netherlands and EU — exact cost and delivery estimate are calculated at checkout."
+          }
+        },
+        "quote_3": {
+          "type": "quote",
+          "settings": {
+            "text": "Honest descriptions, no exaggerated claims. If a product isn't built for something, we'll tell you."
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "quote_1",
+        "quote_2",
+        "quote_3"
+      ]
     }
   },
   "order": [
     "nexa_collection_header",
-    "main"
+    "main",
+    "nexa_trust"
   ]
 }

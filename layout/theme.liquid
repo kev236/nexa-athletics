@@ -56,6 +56,14 @@
           transform: none;
         }
       }
+
+      /* Nexa: give the collection filter/sort toolbar a visible bottom edge so
+         it reads as a distinct bar instead of floating loosely above the grid. */
+      .facets-controls-wrapper {
+        padding-bottom: 1.25rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
     </style>
 
     {{ content_for_header }}
