@@ -29,6 +29,15 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    <style>
+      /* Nexa: the "zoomed out" grid-view title overlay isn't part of this design
+         and can get stuck on via a stale sessionStorage value from earlier
+         testing, independent of the enable_grid_density setting. Force it off. */
+      .product-grid-view-zoom-out--details {
+        display: none !important;
+      }
+    </style>
+
     {{ content_for_header }}
   </head>
 
