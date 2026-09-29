@@ -83,11 +83,14 @@
           margin-top: 0;
         }
 
-        /* Force both grid items to align to the row's top line explicitly —
-           the image and details columns were still landing at different
-           heights even with the sticky/margin fixes above. */
-        [data-template="product"] .product-information__grid {
-          align-items: start;
+        /* The details column (title, price, variants, buy buttons, accordion)
+           is naturally much taller than the square product image, and with
+           both top-aligned in the row the image reads as stuck up in the
+           corner with a lot of details content trailing below it. Center
+           the image within the row instead, so it sits level with the
+           middle of the details card rather than pinned to its top edge. */
+        [data-template="product"] .product-information__media {
+          align-self: center;
         }
       }
 
