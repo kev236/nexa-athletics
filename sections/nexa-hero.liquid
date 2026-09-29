@@ -44,7 +44,6 @@
 
 {% stylesheet %}
   .nexa-hero-wrap {
-    padding: 1.5rem clamp(1.25rem, 4vw, 3rem) 0;
     background: #0a0710;
   }
 
@@ -52,12 +51,9 @@
     position: relative;
     display: flex;
     align-items: flex-end;
-    aspect-ratio: 2.1 / 1;
-    min-height: 420px;
-    max-height: 680px;
-    padding: 2rem clamp(1.5rem, 3vw, 3rem);
+    min-height: 100svh;
+    padding: 2rem clamp(1.5rem, 4vw, 4rem) 4rem;
     overflow: hidden;
-    border-radius: 20px;
     background: #120d1a;
   }
 
@@ -140,16 +136,13 @@
   }
 
   @media screen and (max-width: 749px) {
-    .nexa-hero-wrap {
-      padding: 1rem 1rem 0;
+    .nexa-hero {
+      min-height: 92svh;
+      padding: 1.5rem 1.25rem 2.5rem;
     }
 
-    .nexa-hero {
-      aspect-ratio: 3 / 4;
-      min-height: 480px;
-      max-height: none;
-      padding: 1.5rem;
-      border-radius: 16px;
+    .nexa-hero__content {
+      max-width: 100%;
     }
   }
 {% endstylesheet %}
