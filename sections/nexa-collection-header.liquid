@@ -29,7 +29,6 @@
 
 {% stylesheet %}
   .nexa-banner-wrap {
-    padding: 1.5rem clamp(1.25rem, 4vw, 3rem) 0;
     background: #0a0710;
   }
 
@@ -38,11 +37,9 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: stretch;
-    height: clamp(280px, 32vw, 420px);
-    border-radius: 20px;
+    height: clamp(320px, 36vw, 480px);
     overflow: hidden;
     background: #120d1a;
-    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .nexa-banner__image {
@@ -104,10 +101,6 @@
   }
 
   @media screen and (max-width: 749px) {
-    .nexa-banner-wrap {
-      padding: 1rem 1rem 0;
-    }
-
     .nexa-banner {
       grid-template-columns: 1fr;
       height: auto;

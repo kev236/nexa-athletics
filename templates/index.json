@@ -71,6 +71,7 @@
     "nexa_categories": {
       "type": "nexa-category-grid",
       "settings": {
+        "eyebrow": "Categories",
         "heading": "Shop by category",
         "collection_handles": "t-shirts,hoodies,leggings-shorts,accessories"
       }
