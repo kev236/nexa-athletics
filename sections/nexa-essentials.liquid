@@ -176,11 +176,9 @@
     transition: transform 0.25s ease, opacity 0.35s ease;
   }
 
-  .nexa-essentials__card:hover .nexa-essentials__card-image img {
-    transform: scale(1.04);
-  }
-
-  /* Swap to the second product photo on hover, when one exists. */
+  /* Swap to the second product photo on hover, when one exists. Kept as the
+     only hover effect here — combined with a zoom it felt like too much
+     happening at once. */
   .nexa-essentials__card-image-secondary {
     position: absolute;
     inset: 0;
@@ -198,12 +196,6 @@
   @media (prefers-reduced-motion: reduce) {
     .nexa-essentials__card-image img {
       transition: none;
-    }
-  }
-
-  @media (hover: none) {
-    .nexa-essentials__card-image-secondary {
-      display: none;
     }
   }
 

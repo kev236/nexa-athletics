@@ -65,13 +65,14 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
 
-      /* Nexa: with only one product photo per item right now, the media
-         gallery had nothing to size itself against and rendered near-full
-         column width — dwarfing the buy box next to it. Cap it to a sane
-         size on larger screens; mobile keeps its natural full-width layout. */
+      /* Nexa: the media gallery had nothing to size itself against and
+         rendered near-full column width, dwarfing the buy box next to it.
+         Cap it to a sane size on larger screens; mobile keeps its natural
+         full-width layout. (520px read as too small once we capped it —
+         640px keeps it contained without shrinking it down.) */
       @media screen and (min-width: 750px) {
         [data-template="product"] media-gallery {
-          max-width: 520px;
+          max-width: 640px;
           margin-inline: auto;
         }
       }
@@ -83,6 +84,22 @@
         letter-spacing: 0.03em;
         text-transform: uppercase;
         font-size: 0.8125rem;
+      }
+
+      /* Nexa: the collection grid was capped at the same 1440px page-width as
+         marketing sections, so on wide screens the sidebar filter sat ~240px+
+         in from the actual browser edge. Give this page a wider container —
+         still centered with real margins, not edge-to-edge (that read as the
+         filter being jammed against the wall) — and stop the filter column
+         itself from ballooning to a third of that width for just two groups. */
+      @media screen and (min-width: 990px) {
+        [data-template="collection"] .collection-wrapper {
+          --page-width: 1800px;
+        }
+      }
+
+      [data-template="collection"] .facets-block-wrapper--vertical {
+        max-width: 220px;
       }
     </style>
 
