@@ -12,7 +12,7 @@
     "nexa_hero": {
       "type": "nexa-hero",
       "settings": {
-        "background_image": "shopify://shop_images/nexa-athletics-hero-bg.png",
+        "background_image": "shopify://shop_images/nexa-athletics-hero-photo.png",
         "eyebrow": "Premium performance essentials",
         "heading": "Built to move.",
         "body": "For athletes and creators who push limits. Premium quality, modern design.",
