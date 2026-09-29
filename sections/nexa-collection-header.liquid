@@ -1,0 +1,84 @@
+<section class="nexa-collection-header" data-testid="nexa-collection-header">
+  {% if section.settings.eyebrow != blank %}
+    <p class="nexa-collection-header__eyebrow">{{ section.settings.eyebrow }}</p>
+  {% endif %}
+  <h1 class="nexa-collection-header__title">{{ closest.collection.title }}</h1>
+  {% if closest.collection.description != blank %}
+    <div class="nexa-collection-header__description">{{ closest.collection.description }}</div>
+  {% elsif section.settings.fallback_description != blank %}
+    <p class="nexa-collection-header__description">{{ section.settings.fallback_description }}</p>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .nexa-collection-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    max-width: var(--page-width, 1440px);
+    margin: 0 auto;
+    padding: 4.5rem clamp(1.25rem, 6vw, 6rem) 2.5rem;
+    background: #0a0710;
+  }
+
+  .nexa-collection-header__eyebrow {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #c084fc;
+  }
+
+  .nexa-collection-header__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .nexa-collection-header__description {
+    margin: 0;
+    max-width: 560px;
+    font-family: var(--font-body--family);
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @media screen and (max-width: 749px) {
+    .nexa-collection-header {
+      padding: 3rem 1.25rem 2rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nexa collection header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "SHOP"
+    },
+    {
+      "type": "text",
+      "id": "fallback_description",
+      "label": "Fallback description",
+      "info": "Shown only when the collection itself has no description set",
+      "default": "Premium performance wear for every move."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nexa collection header"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,201 @@
+<section class="nexa-trust" data-testid="nexa-trust">
+  {% assign badges = section.blocks | where: 'type', 'badge' %}
+  {% assign quotes = section.blocks | where: 'type', 'quote' %}
+
+  {% if badges.size > 0 %}
+    <div class="nexa-trust__badges">
+      {% for block in badges %}
+        <div class="nexa-trust__badge" {{ block.shopify_attributes }}>
+          <span class="nexa-trust__badge-icon">
+            {%- render 'icon-or-image', icon: block.settings.icon, width: 28 -%}
+          </span>
+          <p class="nexa-trust__badge-heading">{{ block.settings.heading }}</p>
+          <p class="nexa-trust__badge-text">{{ block.settings.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if quotes.size > 0 %}
+    <div class="nexa-trust__quotes">
+      {% for block in quotes %}
+        <p class="nexa-trust__quote" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .nexa-trust {
+    max-width: var(--page-width, 1440px);
+    margin: 0 auto;
+    padding: 4.5rem clamp(1.25rem, 6vw, 6rem);
+    background: #0a0710;
+  }
+
+  .nexa-trust__badges {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .nexa-trust__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 2rem;
+    border: 1px solid rgba(147, 51, 234, 0.25);
+    border-radius: 16px;
+    background: rgba(147, 51, 234, 0.06);
+  }
+
+  .nexa-trust__badge-icon {
+    display: flex;
+    color: #9333ea;
+  }
+
+  .nexa-trust__badge-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nexa-trust__badge-heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  .nexa-trust__badge-text {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .nexa-trust__quotes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nexa-trust__quote {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  @media screen and (max-width: 749px) {
+    .nexa-trust {
+      padding: 3rem 1.25rem;
+    }
+
+    .nexa-trust__badges {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nexa trust",
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "eye", "label": "Eye" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "silhouette", "label": "Person" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "return", "label": "Return" }
+          ],
+          "default": "eye"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Built for daily use"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Chosen for what actually holds up through training, not just what looks good in a photo."
+        }
+      ]
+    },
+    {
+      "type": "quote",
+      "name": "Quote line",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Made to perform, not to gather dust."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nexa trust",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "eye",
+            "heading": "Built for daily use",
+            "text": "Chosen for what actually holds up through training, not just what looks good in a photo."
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "heart",
+            "heading": "Checked before it's listed",
+            "text": "We look at real specs and real reviews before adding anything to the store."
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "silhouette",
+            "heading": "Real support",
+            "text": "Questions about an order or a product? Reach out through the contact page and we'll get back to you."
+          }
+        },
+        {
+          "type": "quote",
+          "settings": { "text": "Made to perform, not to gather dust." }
+        },
+        {
+          "type": "quote",
+          "settings": { "text": "Ships to the Netherlands and EU — exact cost and delivery estimate are calculated at checkout." }
+        },
+        {
+          "type": "quote",
+          "settings": { "text": "Honest descriptions, no exaggerated claims. If a product isn't built for something, we'll tell you." }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
