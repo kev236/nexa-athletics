@@ -68,135 +68,11 @@
         "button_link": "shopify://pages/contact"
       }
     },
-    "section_collgrid": {
-      "type": "collection-list",
-      "name": "t:names.collection_list",
-      "blocks": {
-        "group_header": {
-          "type": "group",
-          "name": "t:names.header",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 8,
-            "width": "fill",
-            "width_mobile": "fill",
-            "height": "fit",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "header_text": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>Shop by category</p>",
-                "type_preset": "h2",
-                "font": "var(--font-heading--family)",
-                "font_size": "2.5rem",
-                "line_height": "display-tight",
-                "letter_spacing": "-0.01em",
-                "case": "none",
-                "wrap": "pretty",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "text_color": "#ffffff",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 16,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              }
-            }
-          },
-          "block_order": ["header_text"]
-        },
-        "static-collection-card": {
-          "type": "_collection-card",
-          "name": "t:names.collection_card",
-          "static": true,
-          "settings": {
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "flex-end",
-            "placement": "on_image",
-            "border": "solid",
-            "border_width": 1,
-            "border_opacity": 20,
-            "border_color": "#9333ea",
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "name": "t:names.collection_card_image",
-              "static": true,
-              "settings": {
-                "image_ratio": "square",
-                "toggle_overlay": true,
-                "overlay_color": "#00000080",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              }
-            },
-            "collection-title": {
-              "type": "collection-title",
-              "name": "t:names.collection_title",
-              "settings": {
-                "type_preset": "custom",
-                "font": "var(--font-heading--family)",
-                "font_size": "1.5rem",
-                "line_height": "display-tight",
-                "letter_spacing": "-0.01em",
-                "case": "none",
-                "wrap": "pretty",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "background": false,
-                "background_color": "#00000026",
-                "padding-block-start": 24,
-                "padding-block-end": 24,
-                "padding-inline-start": 24,
-                "padding-inline-end": 24
-              }
-            }
-          },
-          "block_order": ["collection-title"]
-        }
-      },
-      "block_order": ["group_header"],
+    "nexa_categories": {
+      "type": "nexa-category-grid",
       "settings": {
-        "collection_list": ["gid://shopify/Collection/710821216633", "gid://shopify/Collection/710821249401", "gid://shopify/Collection/710821282169", "gid://shopify/Collection/710821314937"],
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "columns": 2,
-        "mobile_columns": "1",
-        "columns_gap": 16,
-        "rows_gap": 16,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 16,
-        "background_color": "#050308",
-        "padding-block-start": 72,
-        "padding-block-end": 72
+        "heading": "Shop by category",
+        "collection_handles": "t-shirts,hoodies,leggings-shorts,accessories"
       }
     }
   },
@@ -204,6 +80,6 @@
     "nexa_hero",
     "nexa_essentials",
     "nexa_values",
-    "section_collgrid"
+    "nexa_categories"
   ]
 }
