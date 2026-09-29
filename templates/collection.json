@@ -12,7 +12,7 @@
     "nexa_collection_header": {
       "type": "nexa-collection-header",
       "settings": {
-        "image": "shopify://shop_images/nexa-athletics-hero-photo.png",
+        "image": "shopify://shop_images/nexa-athletics-shop-banner.png",
         "eyebrow": "Shop",
         "fallback_description": "Premium performance wear for every move."
       }

@@ -87,6 +87,96 @@
         "padding-block-end": 40
       }
     },
+    "footer_nav_H4mKqz": {
+      "type": "footer",
+      "blocks": {
+        "menu_shop": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-shop",
+            "heading": "Shop",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        },
+        "menu_company": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-company",
+            "heading": "Company",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        },
+        "group_follow": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 14,
+            "width": "fill"
+          },
+          "blocks": {
+            "text_follow_heading": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Follow us</p>",
+                "width": "fit-content",
+                "alignment": "left",
+                "type_preset": "h6"
+              },
+              "blocks": {}
+            },
+            "social_links_follow": {
+              "type": "social-links",
+              "settings": {
+                "icon_color": "",
+                "facebook_url": "https://www.facebook.com/",
+                "instagram_url": "https://www.instagram.com/",
+                "youtube_url": "",
+                "tiktok_url": "https://www.tiktok.com/",
+                "twitter_url": "",
+                "threads_url": "",
+                "linkedin_url": "",
+                "bluesky_url": "",
+                "snapchat_url": "",
+                "pinterest_url": "",
+                "tumblr_url": "",
+                "vimeo_url": "",
+                "custom_url": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": ["text_follow_heading", "social_links_follow"]
+        }
+      },
+      "block_order": ["menu_shop", "menu_company", "group_follow"],
+      "name": "t:names.footer",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 40,
+        "background_color": "{{ settings.color_palette.color7 }}",
+        "padding-block-start": 8,
+        "padding-block-end": 40
+      }
+    },
     "footer_utilities_jLGE8U": {
       "type": "footer-utilities",
       "blocks": {
@@ -149,6 +239,7 @@
   },
   "order": [
     "section_Ldcdxw",
+    "footer_nav_H4mKqz",
     "footer_utilities_jLGE8U"
   ]
 }
