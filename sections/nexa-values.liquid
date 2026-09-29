@@ -1,0 +1,223 @@
+{% liquid
+  assign icon_names = 'lightning_bolt,star,stopwatch' | split: ','
+%}
+
+<section class="nexa-values" data-testid="nexa-values">
+  <div class="nexa-values__text">
+    {% if section.settings.eyebrow != blank %}
+      <p class="nexa-values__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h2 class="nexa-values__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.body != blank %}
+      <p class="nexa-values__body">{{ section.settings.body }}</p>
+    {% endif %}
+    {% if section.settings.button_label != blank %}
+      <a href="{{ section.settings.button_link | default: '#' }}" class="nexa-values__button">
+        {{ section.settings.button_label }}
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="nexa-values__badges">
+    {% for block in section.blocks %}
+      <div class="nexa-values__badge" {{ block.shopify_attributes }}>
+        <span class="nexa-values__badge-icon">
+          {%- render 'icon-or-image', icon: block.settings.icon, width: 28 -%}
+        </span>
+        <p class="nexa-values__badge-label">{{ block.settings.label }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .nexa-values {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    max-width: var(--page-width, 1440px);
+    margin: 0 auto;
+    padding: 4.5rem clamp(1.25rem, 4vw, 4rem);
+    background: #0a0710;
+  }
+
+  .nexa-values__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    max-width: 460px;
+  }
+
+  .nexa-values__eyebrow {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-values__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  .nexa-values__body {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-values__button {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    border: 1px solid #9333ea;
+    background: transparent;
+    color: #c084fc;
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .nexa-values__button:hover {
+    background: rgba(147, 51, 234, 0.12);
+  }
+
+  .nexa-values__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .nexa-values__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    max-width: 160px;
+  }
+
+  .nexa-values__badge-icon {
+    display: flex;
+    color: #9333ea;
+  }
+
+  .nexa-values__badge-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nexa-values__badge-label {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media screen and (max-width: 749px) {
+    .nexa-values {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 3rem 1.25rem;
+    }
+
+    .nexa-values__badges {
+      gap: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nexa values",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "OUR VALUES"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More than just clothing."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "Nexa Athletics is built for those who push limits. Premium quality. Modern design. Real performance."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Our story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "lightning_bolt", "label": "Lightning bolt" },
+            { "value": "star", "label": "Star" },
+            { "value": "stopwatch", "label": "Stopwatch" },
+            { "value": "shoe", "label": "Shoe" },
+            { "value": "shirt", "label": "Shirt" },
+            { "value": "heart", "label": "Heart" }
+          ],
+          "default": "lightning_bolt"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Performance driven"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nexa values",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "lightning_bolt", "label": "Performance driven" } },
+        { "type": "badge", "settings": { "icon": "star", "label": "Premium quality" } },
+        { "type": "badge", "settings": { "icon": "stopwatch", "label": "Built for athletes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

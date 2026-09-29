@@ -1,0 +1,199 @@
+{% liquid
+  if section.settings.collection != blank
+    assign source_collection = section.settings.collection
+    assign source_products = source_collection.products
+  else
+    assign source_products = collections.all.products
+  endif
+
+  assign product_limit = section.settings.product_limit
+%}
+
+<section class="nexa-essentials" data-testid="nexa-essentials">
+  <div class="nexa-essentials__header">
+    {% if section.settings.eyebrow != blank %}
+      <p class="nexa-essentials__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h2 class="nexa-essentials__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+  </div>
+
+  {% if source_products.size > 0 %}
+    <div class="nexa-essentials__grid">
+      {% for product in source_products limit: product_limit %}
+        <a href="{{ product.url }}" class="nexa-essentials__card">
+          <div class="nexa-essentials__card-image">
+            {% if product.featured_image %}
+              {{
+                product.featured_image
+                | image_url: width: 1200
+                | image_tag:
+                  widths: '360, 540, 720, 1200',
+                  sizes: '(min-width: 990px) 25vw, 50vw',
+                  alt: product.featured_image.alt | default: product.title,
+                  loading: 'lazy'
+              }}
+            {% endif %}
+          </div>
+          <div class="nexa-essentials__card-info">
+            <p class="nexa-essentials__card-title">{{ product.title }}</p>
+            <p class="nexa-essentials__card-price">{{ product.price | money }}</p>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="nexa-essentials__empty">
+      <p>New pieces are on the way — check back soon.</p>
+    </div>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .nexa-essentials {
+    max-width: var(--page-width, 1440px);
+    margin: 0 auto;
+    padding: 4.5rem clamp(1.25rem, 4vw, 4rem);
+    background: #050308;
+  }
+
+  .nexa-essentials__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .nexa-essentials__eyebrow {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-essentials__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  .nexa-essentials__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .nexa-essentials__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .nexa-essentials__card-image {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #120d1a;
+  }
+
+  .nexa-essentials__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+
+  .nexa-essentials__card:hover .nexa-essentials__card-image img {
+    transform: scale(1.04);
+  }
+
+  .nexa-essentials__card-info {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .nexa-essentials__card-title {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    color: #ffffff;
+  }
+
+  .nexa-essentials__card-price {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-essentials__empty {
+    padding: 3rem 0;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media screen and (max-width: 989px) {
+    .nexa-essentials__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .nexa-essentials {
+      padding: 3rem 1.25rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nexa essentials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "SHOP"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Essentials"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Leave blank to pull from all products"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Products to show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nexa essentials"
+    }
+  ]
+}
+{% endschema %}
