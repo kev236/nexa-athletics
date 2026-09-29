@@ -13,7 +13,7 @@
       "type": "nexa-hero",
       "settings": {
         "background_image": "shopify://shop_images/nexa-athletics-hero-bg.png",
-        "eyebrow": "PREMIUM PERFORMANCE ESSENTIALS",
+        "eyebrow": "Premium performance essentials",
         "heading": "Built to move.",
         "body": "For athletes and creators who push limits. Premium quality, modern design.",
         "button_label": "Shop the collection",
@@ -23,8 +23,11 @@
     "nexa_essentials": {
       "type": "nexa-essentials",
       "settings": {
-        "eyebrow": "SHOP",
+        "eyebrow": "Featured products",
         "heading": "Essentials",
+        "view_all_label": "View all products",
+        "view_all_link": "shopify://collections/all",
+        "show_new_badge": true,
         "product_limit": 4
       }
     },
@@ -35,27 +38,30 @@
           "type": "badge",
           "settings": {
             "icon": "lightning_bolt",
-            "label": "Performance driven"
+            "label": "Performance driven",
+            "caption": "Engineered for movement."
           }
         },
         "badge_2": {
           "type": "badge",
           "settings": {
             "icon": "star",
-            "label": "Premium quality"
+            "label": "Premium quality",
+            "caption": "Materials that last."
           }
         },
         "badge_3": {
           "type": "badge",
           "settings": {
             "icon": "stopwatch",
-            "label": "Built for athletes"
+            "label": "Built for athletes",
+            "caption": "From gym to everyday."
           }
         }
       },
       "block_order": ["badge_1", "badge_2", "badge_3"],
       "settings": {
-        "eyebrow": "OUR VALUES",
+        "eyebrow": "Our values",
         "heading": "More than just clothing.",
         "body": "Nexa Athletics is built for those who push limits. Premium quality. Modern design. Real performance.",
         "button_label": "Our story",

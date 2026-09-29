@@ -1,58 +1,132 @@
-<section class="nexa-collection-header" data-testid="nexa-collection-header">
-  {% if section.settings.eyebrow != blank %}
-    <p class="nexa-collection-header__eyebrow">{{ section.settings.eyebrow }}</p>
-  {% endif %}
-  <h1 class="nexa-collection-header__title">{{ closest.collection.title }}</h1>
-  {% if closest.collection.description != blank %}
-    <div class="nexa-collection-header__description">{{ closest.collection.description }}</div>
-  {% elsif section.settings.fallback_description != blank %}
-    <p class="nexa-collection-header__description">{{ section.settings.fallback_description }}</p>
-  {% endif %}
+<section class="nexa-banner-wrap" data-testid="nexa-collection-header">
+  <div class="nexa-banner">
+    {% if section.settings.image %}
+      {{
+        section.settings.image
+        | image_url: width: 1600
+        | image_tag:
+          widths: '480, 800, 1200, 1600',
+          sizes: '(min-width: 750px) 50vw, 100vw',
+          class: 'nexa-banner__image',
+          alt: section.settings.image.alt | default: closest.collection.title,
+          loading: 'eager'
+      }}
+      <div class="nexa-banner__overlay"></div>
+    {% endif %}
+    <div class="nexa-banner__content">
+      {% if section.settings.eyebrow != blank %}
+        <p class="nexa-banner__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h1 class="nexa-banner__title">{{ closest.collection.title }}</h1>
+      {% if closest.collection.description != blank %}
+        <div class="nexa-banner__description">{{ closest.collection.description }}</div>
+      {% elsif section.settings.fallback_description != blank %}
+        <p class="nexa-banner__description">{{ section.settings.fallback_description }}</p>
+      {% endif %}
+    </div>
+  </div>
 </section>
 
 {% stylesheet %}
-  .nexa-collection-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-    max-width: var(--page-width, 1440px);
-    margin: 0 auto;
-    padding: 4.5rem clamp(1.25rem, 6vw, 6rem) 2.5rem;
+  .nexa-banner-wrap {
+    padding: 1.5rem clamp(1.25rem, 4vw, 3rem) 0;
     background: #0a0710;
   }
 
-  .nexa-collection-header__eyebrow {
+  .nexa-banner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #120d1a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nexa-banner__image {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
+  }
+
+  .nexa-banner__overlay {
+    grid-column: 2;
+    grid-row: 1;
+    background: linear-gradient(to right, rgba(10, 7, 16, 0.5) 0%, transparent 30%);
+  }
+
+  .nexa-banner__content {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2.5rem clamp(1.5rem, 3vw, 3rem);
+  }
+
+  .nexa-banner__eyebrow {
     margin: 0;
     font-family: var(--font-body--family);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #c084fc;
+    color: rgba(255, 255, 255, 0.6);
   }
 
-  .nexa-collection-header__title {
+  .nexa-banner__title {
     margin: 0;
     font-family: var(--font-heading--family);
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.02;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
     color: #ffffff;
   }
 
-  .nexa-collection-header__description {
+  .nexa-banner__description {
     margin: 0;
-    max-width: 560px;
+    max-width: 420px;
     font-family: var(--font-body--family);
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.5;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.65);
   }
 
   @media screen and (max-width: 749px) {
-    .nexa-collection-header {
-      padding: 3rem 1.25rem 2rem;
+    .nexa-banner-wrap {
+      padding: 1rem 1rem 0;
+    }
+
+    .nexa-banner {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .nexa-banner__image {
+      grid-column: 1;
+      grid-row: 1;
+      min-height: 200px;
+      order: 1;
+    }
+
+    .nexa-banner__overlay {
+      display: none;
+    }
+
+    .nexa-banner__content {
+      grid-column: 1;
+      grid-row: 2;
+      order: 2;
+      padding: 1.5rem;
     }
   }
 {% endstylesheet %}
@@ -62,10 +136,15 @@
   "name": "Nexa collection header",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner image"
+    },
+    {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "SHOP"
+      "default": "Shop"
     },
     {
       "type": "text",

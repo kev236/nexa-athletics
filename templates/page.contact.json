@@ -12,12 +12,11 @@
     "nexa_contact": {
       "type": "nexa-contact",
       "settings": {
-        "eyebrow": "CONTACT",
+        "image": "shopify://shop_images/nexa-athletics-hero-bg.png",
+        "eyebrow": "Contact",
         "title": "Let's connect.",
         "body": "Have a question, need support, or want to work together? Fill out the form and we'll get back to you as soon as possible.",
-        "info_eyebrow": "GET IN TOUCH",
         "email": "kevin.mlocek2007@gmail.com",
-        "follow_eyebrow": "FOLLOW US",
         "instagram_url": "https://www.instagram.com/",
         "tiktok_url": "https://www.tiktok.com/",
         "facebook_url": "https://www.facebook.com/"

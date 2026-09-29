@@ -11,11 +11,19 @@
 
 <section class="nexa-essentials" data-testid="nexa-essentials">
   <div class="nexa-essentials__header">
-    {% if section.settings.eyebrow != blank %}
-      <p class="nexa-essentials__eyebrow">{{ section.settings.eyebrow }}</p>
-    {% endif %}
-    {% if section.settings.heading != blank %}
-      <h2 class="nexa-essentials__heading">{{ section.settings.heading }}</h2>
+    <div class="nexa-essentials__heading-group">
+      {% if section.settings.eyebrow != blank %}
+        <p class="nexa-essentials__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="nexa-essentials__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </div>
+    {% if section.settings.view_all_link != blank %}
+      <a href="{{ section.settings.view_all_link }}" class="nexa-essentials__view-all">
+        {{ section.settings.view_all_label }}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
     {% endif %}
   </div>
 
@@ -24,6 +32,9 @@
       {% for product in source_products limit: product_limit %}
         <a href="{{ product.url }}" class="nexa-essentials__card">
           <div class="nexa-essentials__card-image">
+            {% if section.settings.show_new_badge %}
+              <span class="nexa-essentials__badge">New</span>
+            {% endif %}
             {% if product.featured_image %}
               {{
                 product.featured_image
@@ -54,46 +65,69 @@
   .nexa-essentials {
     max-width: var(--page-width, 1440px);
     margin: 0 auto;
-    padding: 4.5rem clamp(1.25rem, 4vw, 4rem);
-    background: #050308;
+    padding: 3.5rem clamp(1.25rem, 4vw, 3rem);
+    background: #0a0710;
   }
 
   .nexa-essentials__header {
     display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .nexa-essentials__heading-group {
+    display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 2.5rem;
+    gap: 0.375rem;
   }
 
   .nexa-essentials__eyebrow {
     margin: 0;
     font-family: var(--font-body--family);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .nexa-essentials__heading {
     margin: 0;
     font-family: var(--font-heading--family);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    line-height: 1.05;
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
     letter-spacing: -0.01em;
     color: #ffffff;
+  }
+
+  .nexa-essentials__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #c084fc;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nexa-essentials__view-all:hover {
+    color: #d8b4fe;
   }
 
   .nexa-essentials__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .nexa-essentials__card {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.625rem;
     text-decoration: none;
     color: inherit;
   }
@@ -102,8 +136,24 @@
     position: relative;
     aspect-ratio: 1;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 14px;
     background: #120d1a;
+  }
+
+  .nexa-essentials__badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 1;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: #9333ea;
+    color: #ffffff;
+    font-family: var(--font-body--family);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .nexa-essentials__card-image img {
@@ -127,19 +177,19 @@
   .nexa-essentials__card-title {
     margin: 0;
     font-family: var(--font-body--family);
-    font-size: 1rem;
+    font-size: 0.9375rem;
     color: #ffffff;
   }
 
   .nexa-essentials__card-price {
     margin: 0;
     font-family: var(--font-body--family);
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.65);
   }
 
   .nexa-essentials__empty {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
     font-family: var(--font-body--family);
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.6);
@@ -153,7 +203,7 @@
 
   @media screen and (max-width: 749px) {
     .nexa-essentials {
-      padding: 3rem 1.25rem;
+      padding: 2.5rem 1.25rem;
     }
   }
 {% endstylesheet %}
@@ -166,13 +216,30 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "SHOP"
+      "default": "Featured products"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Essentials"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all products"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_new_badge",
+      "label": "Show \"New\" badge on cards",
+      "default": true
     },
     {
       "type": "collection",
