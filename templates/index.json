@@ -45,7 +45,7 @@
         "badge_2": {
           "type": "badge",
           "settings": {
-            "icon": "star",
+            "icon": "lock",
             "label": "Premium quality",
             "caption": "Materials that last."
           }
