@@ -75,12 +75,18 @@
       @media screen and (min-width: 750px) {
         [data-template="product"] media-gallery.sticky-content {
           position: static;
-          /* The theme also gives .sticky-content a negative top margin on a
-             page's first section (to make sticky content hug the header) —
-             with position back to static that just pulls the image upward
-             relative to the details column instead. Neutralize it so both
-             columns start at the same line. */
-          margin-top: 0;
+        }
+
+        /* The theme also gives .sticky-content a negative top margin on a
+           page's first section (to make sticky content hug the header) —
+           with position back to static that just pulls the image upward
+           relative to the details column instead. The rule that sets it
+           (main > .shopify-section:first-child .section:not(...) .sticky-content)
+           out-specifies a plain [data-template] + tag + class override, so
+           margin-top: 0 alone was silently losing that fight. !important
+           to actually win it. */
+        [data-template="product"] media-gallery.sticky-content {
+          margin-top: 0 !important;
         }
 
         /* Guessing the details card's rendered padding in px to offset the
