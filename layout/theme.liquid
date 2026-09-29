@@ -94,17 +94,24 @@
            nothing left to measure or guess. */
         [data-template="product"] .product-information__media {
           align-self: start;
+        }
+
+        /* The card styling lives on <media-gallery> itself, not the
+           .product-information__media wrapper div — that wrapper has a
+           native `width: 0; min-width: 100%;` sizing hack which overrides
+           any max-width we set on it (min-width always wins), which is why
+           the box ignored our cap and ballooned past its own border. */
+        [data-template="product"] media-gallery {
+          display: block;
           box-sizing: border-box;
+          width: 100%;
           max-width: 640px;
           margin-inline: auto;
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 20px;
           background: #140e1d;
           padding: 32px;
-        }
-
-        [data-template="product"] media-gallery {
-          max-width: 100%;
+          overflow: hidden;
         }
       }
 
