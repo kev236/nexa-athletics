@@ -36,6 +36,26 @@
       .product-grid-view-zoom-out--details {
         display: none !important;
       }
+
+      /* Nexa: lift product cards on hover so the catalog grid feels premium
+         instead of static, matching the rest of the site's interactions. */
+      .product-card {
+        transition: transform 0.25s ease;
+      }
+      .product-card:hover {
+        transform: translateY(-4px);
+      }
+      .product-card:hover .product-grid__card {
+        box-shadow: 0 16px 36px rgba(124, 58, 237, 0.2), 0 4px 12px rgba(0, 0, 0, 0.45);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .product-card {
+          transition: none;
+        }
+        .product-card:hover {
+          transform: none;
+        }
+      }
     </style>
 
     {{ content_for_header }}
