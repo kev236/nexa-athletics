@@ -83,7 +83,11 @@
 
   .nexa-category-grid__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* minmax(0, 1fr), not bare 1fr — a bare 1fr track's minimum is its
+       content's min-content width, so a card with a longer title (e.g.
+       "Leggings & Shorts") could grow its own column wider than the rest
+       instead of every column sharing the row equally. */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.25rem;
   }
 
@@ -174,7 +178,7 @@
 
   @media screen and (max-width: 989px) {
     .nexa-category-grid__grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
