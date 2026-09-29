@@ -83,14 +83,15 @@
           margin-top: 0;
         }
 
-        /* The details column (title, price, variants, buy buttons, accordion)
-           is naturally much taller than the square product image, and with
-           both top-aligned in the row the image reads as stuck up in the
-           corner with a lot of details content trailing below it. Center
-           the image within the row instead, so it sits level with the
-           middle of the details card rather than pinned to its top edge. */
+        /* Neither top-aligning (image sat above the card's own border+padding)
+           nor centering (overshot into the middle of a much taller card,
+           accordion included) put the image level with the title. The
+           details card has a 1px border + 32px top padding before its
+           actual text starts, so offset the image by that same amount to
+           land its top edge inline with the title, not the card's outer box. */
         [data-template="product"] .product-information__media {
-          align-self: center;
+          align-self: start;
+          margin-top: 33px;
         }
       }
 
