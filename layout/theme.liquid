@@ -65,6 +65,19 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
 
+      /* Nexa: found the real cause of the "sticky image" complaint — the
+         theme's product-media-gallery-content snippet unconditionally puts
+         a `sticky-content` class on <media-gallery> itself (position:
+         sticky; top: 0), completely separate from the sticky_details_desktop
+         setting we already turned off. That's what was pinning the image in
+         place while the details column scrolled normally. Cancel it so the
+         image scrolls inline with the details box like everything else. */
+      @media screen and (min-width: 750px) {
+        [data-template="product"] media-gallery.sticky-content {
+          position: static;
+        }
+      }
+
       /* Nexa: the media gallery had nothing to size itself against and
          rendered near-full column width, dwarfing the buy box next to it.
          Cap it to a sane size on larger screens; mobile keeps its natural
