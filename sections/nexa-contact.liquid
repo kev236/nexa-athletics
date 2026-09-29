@@ -195,8 +195,26 @@
     color: rgba(255, 255, 255, 0.65);
   }
 
+  /* This section is always last on the contact page, so the theme's own
+     sticky-footer rule (.shopify-section:last-child { flex-grow: 1 })
+     stretches its wrapper to fill any leftover viewport height. Keep the
+     banner at its natural height and let the form area grow to absorb that
+     space, centering its content instead of leaving dead space below it. */
+  .shopify-section:has(> .nexa-contact) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nexa-banner-wrap {
+    flex-shrink: 0;
+  }
+
   .nexa-contact {
+    flex: 1;
+    display: flex;
+    align-items: center;
     max-width: var(--page-width, 1440px);
+    width: 100%;
     margin: 0 auto;
     padding: 3.5rem clamp(1.25rem, 4vw, 3rem) 5rem;
     background: #0a0710;
@@ -206,6 +224,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
     gap: 4rem;
+    width: 100%;
   }
 
   .nexa-contact__panel-heading {

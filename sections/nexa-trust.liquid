@@ -26,7 +26,20 @@
 </section>
 
 {% stylesheet %}
+  /* This is always the last section on the pages it appears on, so the
+     theme's own sticky-footer rule (.shopify-section:last-child { flex-grow: 1 })
+     stretches its wrapper to fill any leftover viewport height. Center the
+     content within that stretch instead of leaving it pinned to the top with
+     dead space below. */
+  .shopify-section:has(> .nexa-trust) {
+    display: flex;
+  }
+
   .nexa-trust {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     max-width: var(--page-width, 1440px);
     margin: 0 auto;
     padding: 4.5rem clamp(1.25rem, 6vw, 6rem);
