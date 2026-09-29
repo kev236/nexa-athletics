@@ -64,6 +64,26 @@
         margin-bottom: 0.5rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
+
+      /* Nexa: with only one product photo per item right now, the media
+         gallery had nothing to size itself against and rendered near-full
+         column width — dwarfing the buy box next to it. Cap it to a sane
+         size on larger screens; mobile keeps its natural full-width layout. */
+      @media screen and (min-width: 750px) {
+        [data-template="product"] media-gallery {
+          max-width: 520px;
+          margin-inline: auto;
+        }
+      }
+
+      /* Nexa: brand the sidebar filter group labels (Availability, Price)
+         to match the eyebrow typography used across the rest of the site. */
+      [data-template="collection"] .facets--vertical .facets__label {
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        font-size: 0.8125rem;
+      }
     </style>
 
     {{ content_for_header }}
