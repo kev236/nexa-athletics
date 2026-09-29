@@ -34,14 +34,13 @@
 
 {% stylesheet %}
   .nexa-values {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
+    gap: 4rem;
     max-width: var(--page-width, 1440px);
     margin: 0 auto;
-    padding: 4.5rem clamp(1.25rem, 4vw, 4rem);
+    padding: 5.5rem clamp(1.25rem, 6vw, 6rem);
     background: #0a0710;
   }
 
@@ -49,8 +48,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
-    max-width: 460px;
+    gap: 1rem;
+    max-width: 480px;
   }
 
   .nexa-values__eyebrow {
@@ -101,8 +100,8 @@
   }
 
   .nexa-values__badges {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
   }
 
@@ -110,8 +109,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
-    max-width: 160px;
+    gap: 0.875rem;
+    padding: 1.75rem 1.5rem;
+    border: 1px solid rgba(147, 51, 234, 0.25);
+    border-radius: 16px;
+    background: rgba(147, 51, 234, 0.06);
   }
 
   .nexa-values__badge-icon {
@@ -120,29 +122,34 @@
   }
 
   .nexa-values__badge-icon svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 
   .nexa-values__badge-label {
     margin: 0;
     font-family: var(--font-body--family);
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  @media screen and (max-width: 989px) {
+    .nexa-values {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
   }
 
   @media screen and (max-width: 749px) {
     .nexa-values {
-      flex-direction: column;
-      align-items: flex-start;
       padding: 3rem 1.25rem;
     }
 
     .nexa-values__badges {
-      gap: 1.5rem;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
   }
 {% endstylesheet %}
