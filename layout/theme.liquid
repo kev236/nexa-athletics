@@ -82,6 +82,13 @@
              columns start at the same line. */
           margin-top: 0;
         }
+
+        /* Force both grid items to align to the row's top line explicitly —
+           the image and details columns were still landing at different
+           heights even with the sticky/margin fixes above. */
+        [data-template="product"] .product-information__grid {
+          align-items: start;
+        }
       }
 
       /* Nexa: the media gallery had nothing to size itself against and
