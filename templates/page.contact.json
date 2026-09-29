@@ -12,7 +12,7 @@
     "nexa_contact": {
       "type": "nexa-contact",
       "settings": {
-        "image": "shopify://shop_images/nexa-athletics-hero-bg.png",
+        "image": "shopify://shop_images/nexa-athletics-hero-photo.png",
         "eyebrow": "Contact",
         "title": "Let's connect.",
         "body": "Have a question, need support, or want to work together? Fill out the form and we'll get back to you as soon as possible.",
