@@ -7,6 +7,62 @@ store check-in" routine) can pick up context without replaying this chat.
 
 ---
 
+## 2026-09-30 — Routine audit (read-only; no store or theme changes)
+
+**Checked:** product catalog/status, orders, 7-day traffic, shop policies,
+shop meta description, theme static checks (insecure `http://` links,
+`<img>` without alt, meta/OG tags, placeholder text).
+
+**Found:**
+- **Traffic:** 248 sessions in 7 days (246 direct, 2 search), 0 cart
+  additions, 0 checkouts. Spikes on 09-28 (106) and 09-29 (113), only 5 so
+  far on 09-30 — looks like the earlier burst is tapering off, consistent
+  with bot/crawler traffic rather than shoppers. Orders: 0.
+- **Catalog:** 4 ACTIVE (Tee, Hoodie, Shorts, Cap), 8 DRAFT, all 0
+  inventory, as logged. **NEW since last entry:** 33 further products are
+  ARCHIVED (vendor "My Store 3": phone lens kits, LED strips, posture
+  braces, blenders, kitchenware, car mounts, a digital guide). Several carry
+  large inventory counts (up to ~290k) and one product has 40 variants.
+  They're archived so not visible on the storefront; they look like leftovers
+  from an earlier, unrelated store concept. Not touched — owner should
+  decide whether to delete them.
+- **Policies (compliance gap):** the only shop policy that exists is the
+  Privacy policy (Shopify template, last updated 2026-09-28). There is **no
+  Refund, Terms of Service, Shipping or Contact-information policy**.
+  Not assessed against EU/NL requirements here — needs checking against
+  official sources and a lawyer before real sales (withdrawal rights,
+  pre-contract information, business identification). Not drafted by me.
+- **Privacy policy contact block** publishes a personal Gmail address and
+  a street address (Napoleonshoed 1, Oosterhout) and has a dangling
+  "please call  or email" (empty phone). Owner should confirm the home
+  address is meant to be public, and whether a business address/email
+  should replace it.
+- **Meta description** still empty (standing item).
+- **Theme:** no insecure http links, no `<img>` missing alt (gift_card
+  template matched the grep only because `alt` is on a separate line; not
+  verified further), OG/canonical meta present in `snippets/meta-tags.liquid`,
+  no lorem/TODO placeholders. Only `example.com` hit is a legitimate input
+  placeholder in `sections/nexa-contact.liquid`.
+
+**Changed:** nothing in the store or theme. Only this log entry.
+
+**Not checked (no browser/preview access this run):** live-site rendering,
+mobile layout, page speed, Lighthouse/a11y scan, footer/menu link
+resolution, checkout flow. Recommend doing these next run with a real
+browser.
+
+**Open / needs human review:**
+1. Create Refund, Terms, Shipping (and confirm Contact) policies — legal
+   review required; also confirm business registration details before
+   taking payments.
+2. Decide on privacy-policy contact details (personal address/email).
+3. Decide whether to delete the 33 archived "My Store 3" products.
+4. Write the store meta description.
+5. Connect Printful/POD app (inventory still 0).
+6. Re-check traffic next run.
+
+---
+
 ## 2026-09-30 — First-drop product capsule + traffic-spike flag
 
 **Context:** Store had 12 "coming soon" apparel products live, all at 0
