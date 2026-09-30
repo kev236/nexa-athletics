@@ -1,0 +1,64 @@
+
+{%- comment -%}
+  Footer entry point to the online withdrawal function (see sections/nexa-withdrawal.liquid).
+  Text comes from locales (withdrawal.*), so it follows the storefront language.
+{%- endcomment -%}
+
+<div class="nexa-withdrawal-link" {{ block.shopify_attributes }}>
+  <p class="nexa-withdrawal-link__heading h6">{{ 'withdrawal.footer.heading' | t }}</p>
+  <a href="{{ pages['withdraw'].url | default: '/pages/withdraw' }}" class="nexa-withdrawal-link__button">
+    {{- 'withdrawal.form.start' | t -}}
+  </a>
+</div>
+
+{% stylesheet %}
+  .nexa-withdrawal-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .nexa-withdrawal-link__heading {
+    margin: 0;
+  }
+
+  .nexa-withdrawal-link__button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.625rem 1.25rem;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.4);
+    border-radius: 999px;
+    color: var(--color-foreground);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .nexa-withdrawal-link__button:hover,
+  .nexa-withdrawal-link__button:focus-visible {
+    border-color: #9333ea;
+    background: #9333ea;
+    color: #ffffff;
+  }
+
+  .nexa-withdrawal-link__button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Withdrawal link",
+  "tag": null,
+  "settings": [],
+  "presets": [
+    {
+      "name": "Withdrawal link",
+      "category": "t:categories.footer"
+    }
+  ]
+}
+{% endschema %}

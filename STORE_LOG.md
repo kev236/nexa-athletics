@@ -7,6 +7,56 @@ store check-in" routine) can pick up context without replaying this chat.
 
 ---
 
+## 2026-09-30 — Withdrawal function built (footer button + fallback page)
+
+**Built on branch `claude/zen-hypatia-m2lclw`; NOT live until merged into the
+branch the theme syncs from (presumably `main`) and the page is published.**
+
+**What exists now**
+- `sections/nexa-withdrawal.liquid` + `templates/page.withdrawal.json`: the
+  two-step withdrawal page. Step 1 "Withdraw from contract here" (name,
+  email, order number, items; no account), review, step 2 "Confirm
+  withdrawal here". Posts through Shopify's contact form. Works without
+  JavaScript (single form with the confirm button). Hidden fields add a
+  subject and a browser-clock timestamp.
+- `blocks/nexa-withdrawal-link.liquid`, used in `sections/footer-group.json`
+  (new 4th footer column "Right of withdrawal" with the button). Links to
+  `pages['withdraw'].url`, falling back to `/pages/withdraw`.
+- Strings in `locales/*.json` under `withdrawal.*`: real English and Dutch
+  (`nl.json`: "Hier de overeenkomst herroepen" / "Herroeping bevestigen",
+  wording from ACM/iubenda summaries); the other 32 locales carry the
+  English text as a fallback (separate commit) so Theme Check's
+  MatchingTranslations stays clean. Dutch is a published language.
+- Shopify page created as an UNPUBLISHED draft: `gid://shopify/Page/719214379385`,
+  handle `withdraw`, template `withdrawal`.
+- `policy-drafts/refund-policy.html` now mentions the online function.
+
+**To go live (owner):** merge the branch; publish the page "Withdraw from
+contract" (Online Store > Pages); open `/pages/withdraw` and `/nl/pages/withdraw`
+and submit a test; paste the updated refund policy draft.
+
+**Open gap — acknowledgement email:** the law requires an acknowledgement
+on a durable medium with the statement's content and date/time. Shopify's
+contact form only emails the STORE; the customer gets nothing automatically.
+The success message promises email confirmation, so until this is automated
+the owner must reply by hand, promptly, with the statement and its date/time.
+Automating it needs Shopify Flow or an app (none vetted). Also add the page
+link to the order confirmation/shipping emails (Settings > Notifications).
+Also still to verify: whether Shopify's native withdrawal feature (new
+customer accounts) already covers guests.
+
+**Verification done** (no Shopify storefront available in the sandbox):
+Shopify Theme Check on the whole theme — 12 offenses before and after, none
+new; section/footer JSON parse; en/nl key parity; the section and block
+rendered with liquidjs (stubbed `{% form %}`/`t`) and driven in Chromium
+(Playwright): validation, Enter key, review, edit, POST fields, success,
+no-JS, Dutch, mobile 390px without overflow, axe-core with zero violations
+on every state. NOT verified: the real footer column layout in the live
+theme, the real contact-form POST/redirect, and that `{% form 'contact' %}`
+on a custom page returns to the same page after success.
+
+---
+
 ## 2026-09-30 — Withdrawal ("cancellation") button: where it could go
 
 **Research only, nothing built or changed.**

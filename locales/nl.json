@@ -352,5 +352,31 @@
       "default_title": "Standaardtitel",
       "sticky_add_to_cart": "Balk voor snel toevoegen aan winkelwagen"
     }
+  },
+  "withdrawal": {
+    "eyebrow": "Herroepingsrecht",
+    "title": "Overeenkomst herroepen",
+    "intro": "Heb je als consument bij ons gekocht? Dan kun je je bestelling binnen 14 dagen na ontvangst zonder opgave van reden herroepen. Een account is niet nodig. Vul je gegevens in en bevestig daarna.",
+    "refund_policy_link": "Lees ons retourbeleid",
+    "form": {
+      "name": "Naam",
+      "email": "E-mailadres",
+      "order_number": "Bestelnummer",
+      "items": "Betreft",
+      "items_hint": "Pas dit aan als je maar een deel van de bestelling wilt herroepen.",
+      "items_default": "De hele bestelling",
+      "start": "Hier de overeenkomst herroepen",
+      "review_title": "Controleer je gegevens",
+      "review_text": "Je herroept de overeenkomst voor deze bestelling:",
+      "confirm": "Herroeping bevestigen",
+      "edit": "Gegevens aanpassen"
+    },
+    "success": {
+      "title": "Herroeping verzonden",
+      "body": "We hebben je herroeping ontvangen. We bevestigen de ontvangst per e-mail naar het adres dat je hebt ingevuld."
+    },
+    "footer": {
+      "heading": "Herroepingsrecht"
+    }
   }
 }

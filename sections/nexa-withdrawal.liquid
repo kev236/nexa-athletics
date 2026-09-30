@@ -1,0 +1,477 @@
+{%- comment -%}
+  Online withdrawal function required by Directive (EU) 2023/2673: a "start" button, a review step and a
+  "confirm" button, usable without an account. It posts through Shopify's contact form, so the store gets the
+  statement by email; the acknowledgement to the consumer still has to be sent (see STORE_LOG.md).
+  Without JavaScript the page degrades to a single form with the confirm button.
+{%- endcomment -%}
+
+<section class="nexa-withdrawal" data-testid="nexa-withdrawal">
+  <div class="nexa-withdrawal__inner">
+    <div class="nexa-withdrawal__header">
+      <p class="nexa-withdrawal__eyebrow">{{ 'withdrawal.eyebrow' | t }}</p>
+      <h1 class="nexa-withdrawal__title">{{ 'withdrawal.title' | t }}</h1>
+      <p class="nexa-withdrawal__intro">
+        {{ 'withdrawal.intro' | t }}
+        {%- if shop.refund_policy != blank %}
+          <a href="{{ shop.refund_policy.url }}" class="nexa-withdrawal__link">{{ 'withdrawal.refund_policy_link' | t }}</a>
+        {%- endif %}
+      </p>
+    </div>
+
+    <nexa-withdrawal-form class="nexa-withdrawal__panel">
+      {%- form 'contact', id: 'NexaWithdrawalForm', class: 'nexa-withdrawal__form' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="nexa-withdrawal__success" role="status" tabindex="-1" autofocus>
+            <h2 class="nexa-withdrawal__success-title">{{ 'withdrawal.success.title' | t }}</h2>
+            <p class="nexa-withdrawal__success-body">{{ 'withdrawal.success.body' | t }}</p>
+          </div>
+        {%- else -%}
+          {%- if form.errors -%}
+            <div class="nexa-withdrawal__message nexa-withdrawal__message--error" role="alert" tabindex="-1" autofocus>
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          {%- assign items_default = 'withdrawal.form.items_default' | t -%}
+
+          <div class="nexa-withdrawal__fields" data-fields>
+            <label class="nexa-withdrawal__label" for="NexaWithdrawalForm-name">
+              {{- 'withdrawal.form.name' | t }} <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="NexaWithdrawalForm-name"
+              class="nexa-withdrawal__input"
+              autocomplete="name"
+              name="contact[name]"
+              required
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            >
+
+            <label class="nexa-withdrawal__label" for="NexaWithdrawalForm-email">
+              {{- 'withdrawal.form.email' | t }} <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email"
+              id="NexaWithdrawalForm-email"
+              class="nexa-withdrawal__input"
+              autocomplete="email"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              required
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            >
+
+            <label class="nexa-withdrawal__label" for="NexaWithdrawalForm-order">
+              {{- 'withdrawal.form.order_number' | t }} <span aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="NexaWithdrawalForm-order"
+              class="nexa-withdrawal__input"
+              autocomplete="off"
+              name="contact[Order number]"
+              required
+            >
+
+            <label class="nexa-withdrawal__label" for="NexaWithdrawalForm-body">
+              {{- 'withdrawal.form.items' | t }} <span aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="NexaWithdrawalForm-body"
+              class="nexa-withdrawal__input nexa-withdrawal__input--textarea"
+              rows="3"
+              name="contact[body]"
+              aria-describedby="NexaWithdrawalForm-items-hint"
+              required
+            >{{- form.body | default: items_default -}}</textarea>
+            <p class="nexa-withdrawal__hint" id="NexaWithdrawalForm-items-hint">{{ 'withdrawal.form.items_hint' | t }}</p>
+
+            <input type="hidden" name="contact[Subject]" value="Withdrawal from contract">
+            <input type="hidden" name="contact[Submitted at]" value="" data-stamp>
+
+            <button type="submit" class="nexa-withdrawal__button nexa-withdrawal__start" data-start>
+              {{ 'withdrawal.form.start' | t }}
+            </button>
+          </div>
+
+          <div class="nexa-withdrawal__review" data-review>
+            <div class="nexa-withdrawal__summary">
+              <h2 class="nexa-withdrawal__review-title" tabindex="-1" data-review-title>
+                {{ 'withdrawal.form.review_title' | t }}
+              </h2>
+              <p class="nexa-withdrawal__review-text">{{ 'withdrawal.form.review_text' | t }}</p>
+              <dl class="nexa-withdrawal__list">
+                <div class="nexa-withdrawal__list-row">
+                  <dt>{{ 'withdrawal.form.name' | t }}</dt>
+                  <dd data-out="contact[name]"></dd>
+                </div>
+                <div class="nexa-withdrawal__list-row">
+                  <dt>{{ 'withdrawal.form.email' | t }}</dt>
+                  <dd data-out="contact[email]"></dd>
+                </div>
+                <div class="nexa-withdrawal__list-row">
+                  <dt>{{ 'withdrawal.form.order_number' | t }}</dt>
+                  <dd data-out="contact[Order number]"></dd>
+                </div>
+                <div class="nexa-withdrawal__list-row">
+                  <dt>{{ 'withdrawal.form.items' | t }}</dt>
+                  <dd data-out="contact[body]"></dd>
+                </div>
+              </dl>
+            </div>
+            <div class="nexa-withdrawal__actions">
+              <button type="submit" class="nexa-withdrawal__button">{{ 'withdrawal.form.confirm' | t }}</button>
+              <button type="button" class="nexa-withdrawal__button nexa-withdrawal__edit" data-edit>
+                {{ 'withdrawal.form.edit' | t }}
+              </button>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </nexa-withdrawal-form>
+  </div>
+</section>
+
+<script>
+  if (!customElements.get('nexa-withdrawal-form')) {
+    customElements.define(
+      'nexa-withdrawal-form',
+      class extends HTMLElement {
+        connectedCallback() {
+          const form = this.querySelector('form');
+          if (!form || !this.querySelector('[data-start]') || this.dataset.step) return;
+
+          const setStep = (step) => {
+            this.dataset.step = step;
+          };
+
+          setStep('details');
+
+          // Pressing Enter in a field also lands here, so the review step can't be skipped.
+          form.addEventListener('submit', (event) => {
+            if (this.dataset.step === 'details') {
+              event.preventDefault();
+              for (const output of this.querySelectorAll('[data-out]')) {
+                output.textContent = form.elements[output.dataset.out].value.trim();
+              }
+              setStep('review');
+              this.querySelector('[data-review-title]').focus();
+            } else {
+              form.elements['contact[Submitted at]'].value = `${new Date().toISOString()} (browser clock)`;
+            }
+          });
+
+          this.querySelector('[data-edit]').addEventListener('click', () => {
+            setStep('details');
+            form.elements['contact[name]'].focus();
+          });
+        }
+      }
+    );
+  }
+</script>
+
+{% stylesheet %}
+  .shopify-section:has(> .nexa-withdrawal) {
+    display: flex;
+    flex-direction: column;
+    background: #0a0710;
+  }
+
+  .nexa-withdrawal {
+    flex: 1;
+    width: 100%;
+    max-width: var(--page-width, 1440px);
+    margin: 0 auto;
+    padding: 4rem clamp(1.25rem, 4vw, 3rem) 5rem;
+    background: #0a0710;
+  }
+
+  .nexa-withdrawal__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .nexa-withdrawal__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nexa-withdrawal__eyebrow {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .nexa-withdrawal__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+
+  .nexa-withdrawal__intro {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-withdrawal__link {
+    color: #c084fc;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .nexa-withdrawal__panel {
+    display: block;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    background: #140e1d;
+  }
+
+  .nexa-withdrawal__form,
+  .nexa-withdrawal__fields,
+  .nexa-withdrawal__review {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .nexa-withdrawal__label {
+    margin-top: 0.75rem;
+    font-family: var(--font-body--family);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-withdrawal__label:first-of-type {
+    margin-top: 0;
+  }
+
+  .nexa-withdrawal__input {
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+  }
+
+  .nexa-withdrawal__input--textarea {
+    resize: vertical;
+    min-height: 5.5rem;
+  }
+
+  .nexa-withdrawal__input:focus-visible,
+  .nexa-withdrawal__button:focus-visible,
+  .nexa-withdrawal__link:focus-visible {
+    outline: 2px solid #c084fc;
+    outline-offset: 2px;
+  }
+
+  .nexa-withdrawal__hint {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .nexa-withdrawal__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    padding: 1rem 2.25rem;
+    border: 1px solid #9333ea;
+    border-radius: 999px;
+    background: #9333ea;
+    color: #ffffff;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .nexa-withdrawal__button:hover {
+    border-color: #7e22ce;
+    background: #7e22ce;
+  }
+
+  .nexa-withdrawal__start {
+    margin-top: 1rem;
+  }
+
+  .nexa-withdrawal__edit {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: transparent;
+  }
+
+  .nexa-withdrawal__edit:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .nexa-withdrawal__review-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading--family);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .nexa-withdrawal__review-title:focus-visible {
+    outline: 2px solid #c084fc;
+    outline-offset: 4px;
+  }
+
+  .nexa-withdrawal__review-text {
+    margin: 0 0 1rem;
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-withdrawal__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin: 0 0 1.5rem;
+    font-family: var(--font-body--family);
+  }
+
+  .nexa-withdrawal__list-row dt {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .nexa-withdrawal__list-row dd {
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #ffffff;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+  }
+
+  .nexa-withdrawal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* Without JavaScript: fields plus the confirm button only. The script adds data-step to enable the two steps. */
+  .nexa-withdrawal__start,
+  .nexa-withdrawal__summary,
+  .nexa-withdrawal__edit {
+    display: none;
+  }
+
+  nexa-withdrawal-form:not([data-step]) .nexa-withdrawal__review {
+    margin-top: 1rem;
+  }
+
+  nexa-withdrawal-form[data-step] .nexa-withdrawal__start {
+    display: inline-flex;
+  }
+
+  nexa-withdrawal-form[data-step='details'] .nexa-withdrawal__review {
+    display: none;
+  }
+
+  nexa-withdrawal-form[data-step='review'] .nexa-withdrawal__fields {
+    display: none;
+  }
+
+  nexa-withdrawal-form[data-step='review'] .nexa-withdrawal__summary {
+    display: block;
+  }
+
+  nexa-withdrawal-form[data-step='review'] .nexa-withdrawal__edit {
+    display: inline-flex;
+  }
+
+  .nexa-withdrawal__message,
+  .nexa-withdrawal__success {
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem;
+  }
+
+  .nexa-withdrawal__message--error {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    background: rgba(220, 38, 38, 0.12);
+    color: #fca5a5;
+  }
+
+  .nexa-withdrawal__message--error ul {
+    margin: 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  .nexa-withdrawal__success {
+    border: 1px solid rgba(147, 51, 234, 0.4);
+    background: rgba(147, 51, 234, 0.12);
+    color: #d8b4fe;
+  }
+
+  .nexa-withdrawal__success-title {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-heading--family);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .nexa-withdrawal__success-body {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .nexa-withdrawal {
+      padding: 2.5rem 1.25rem 3rem;
+    }
+
+    .nexa-withdrawal__panel {
+      padding: 1.25rem;
+    }
+
+    .nexa-withdrawal__actions .nexa-withdrawal__button {
+      width: 100%;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nexa withdrawal",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Nexa withdrawal"
+    }
+  ]
+}
+{% endschema %}

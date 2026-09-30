@@ -165,9 +165,27 @@
             }
           },
           "block_order": ["text_follow_heading", "social_links_follow"]
+        },
+        "group_withdraw": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 14,
+            "width": "fill"
+          },
+          "blocks": {
+            "withdrawal_link": {
+              "type": "nexa-withdrawal-link",
+              "settings": {}
+            }
+          },
+          "block_order": ["withdrawal_link"]
         }
       },
-      "block_order": ["menu_shop", "menu_company", "group_follow"],
+      "block_order": ["menu_shop", "menu_company", "group_follow", "group_withdraw"],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
