@@ -352,5 +352,31 @@
       "default_title": "Standardtittel",
       "sticky_add_to_cart": "Hurtiglinje for «Legg i handlekurv»"
     }
+  },
+  "withdrawal": {
+    "eyebrow": "Right of withdrawal",
+    "title": "Withdraw from contract",
+    "intro": "If you bought from us as a consumer, you can withdraw from your order within 14 days of receiving it, without giving a reason. You don't need an account. Fill in your details, then confirm.",
+    "refund_policy_link": "Read our refund policy",
+    "form": {
+      "name": "Name",
+      "email": "Email address",
+      "order_number": "Order number",
+      "items": "Items covered",
+      "items_hint": "Change this if you only want to withdraw from part of the order.",
+      "items_default": "The entire order",
+      "start": "Withdraw from contract here",
+      "review_title": "Check your details",
+      "review_text": "You are withdrawing from the contract for this order:",
+      "confirm": "Confirm withdrawal here",
+      "edit": "Edit details"
+    },
+    "success": {
+      "title": "Withdrawal sent",
+      "body": "We have received your withdrawal. We will confirm receipt by email to the address you entered."
+    },
+    "footer": {
+      "heading": "Right of withdrawal"
+    }
   }
 }
