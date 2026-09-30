@@ -7,6 +7,45 @@ store check-in" routine) can pick up context without replaying this chat.
 
 ---
 
+## 2026-09-30 — Follow-up to audit: cleanup, policy drafts, Printful check
+
+**Done:**
+- **Deleted all 33 archived leftover products** (vendors "My Store 3" and
+  "Recoup"; owner confirmed). 33/33 succeeded, no errors. Catalog is now
+  the 12 Nexa Athletics products only (4 active, 8 draft).
+- **Policy drafts written** (Refund, Terms of Service, Shipping, Contact
+  information) in `policy-drafts/`. **Not live:** the Shopify connection
+  lacks the `write_legal_policies` scope, so the owner must paste them in
+  Shopify admin > Settings > Policies. Not lawyer-reviewed. Bracketed
+  placeholders remain for KvK, VAT, return address, delivery times, duties —
+  real facts not supplied, not invented. Shipping rates in the draft are
+  copied from the live shipping profile (NL €6.95 + a free option of unknown
+  condition, EU €12.95, intl €19.95).
+- Privacy-policy contact fix (owner's phone 06 23339806 + email) and a
+  suggested meta description are in `policy-drafts/` too; neither could be
+  applied via API. Street address left in place (Dutch business-identity
+  rules generally call for one) — owner to confirm.
+
+**Legal sources consulted:** Directive 2011/83/EU (EUR-Lex; 14-day
+withdrawal, model form) and business.gov.nl search summaries (14-day
+cooling-off from day after delivery; obvious cancellation button required
+since 19 June 2026). business.gov.nl was blocked from the sandbox, so pages
+were not read in full — verify directly.
+
+**New flags:**
+- **Printful is installed** (also DSers) but the 12 products are **not
+  inventory-tracked or linked** (`tracksInventory: false`, 0 inventory). The 4
+  ACTIVE "coming soon" products are therefore potentially purchasable if
+  checkout is open, with no fulfillment sync and no refund/terms policy
+  live. Either link them to Printful, or make them non-purchasable / keep
+  the storefront password-protected until ready. Not changed.
+- **Cancellation button:** business.gov.nl says an obvious cancellation
+  button is required since 19 June 2026. Nothing in the theme or checkout
+  provides one. Needs a solution (app or custom page) before real sales.
+- Policies above must go live before the store takes any order.
+
+---
+
 ## 2026-09-30 — Routine audit (read-only; no store or theme changes)
 
 **Checked:** product catalog/status, orders, 7-day traffic, shop policies,
