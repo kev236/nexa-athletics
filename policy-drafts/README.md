@@ -21,3 +21,4 @@ Business decisions baked into the draft that you/your lawyer must confirm:
 Other files:
 - `privacy-policy-contact-fix.md` - the contact-line fix for the live Privacy policy
 - `meta-description.md` - suggested homepage meta description
+- `withdrawal-acknowledgement-email.md` - interim manual reply (EN/NL) for withdrawal statements

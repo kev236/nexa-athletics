@@ -7,6 +7,60 @@ store check-in" routine) can pick up context without replaying this chat.
 
 ---
 
+## 2026-09-30 — Automating the withdrawal acknowledgement email: research
+
+**Research only; no store or theme changes. Sources are search summaries of
+vendor/Shopify pages — every Shopify domain, apps.shopify.com, EUR-Lex and
+ACM were blocked from the sandbox, so none of it was read first-hand.**
+
+**Finding: Shopify cannot do this natively for a custom theme form.**
+- The theme contact form emails the STORE only; there is no customer
+  auto-reply template.
+- Shopify Flow has no trigger for the theme contact form (its form triggers
+  exist only for the Shopify Forms app / some form-builder apps).
+- Flow's "Send internal email" can't take a variable recipient ("best used
+  to send emails to staff"); customer emails go through marketing
+  automations, which need marketing consent — unsuitable for an
+  acknowledgement.
+- No Admin API mutation sends an arbitrary transactional email to a customer.
+- Correction: the claim that Shopify launched a native withdrawal feature for
+  new customer accounts is NOT confirmed. The only native piece found is the
+  14-day cancellation/return rule for Managed Markets (Global-e) orders,
+  which this store doesn't appear to use.
+
+**Options**
+1. **Install an EU-withdrawal app** (recommended). They provide the form,
+   an immediate confirmation email with timestamp, records/exports, several
+   languages. Listings say (vendor claims, unvetted, young category, few
+   reviews): CancelFlow (Codext GmbH; Dutch; timestamp + reference + PDF with
+   IP/user-agent; free plan, Pro $9.99/mo; Pro adds a "save the sale"
+   discount offer shown before submitting — keep that OFF, it could be seen
+   as obstructing withdrawal), Cancevia (Dutch; no account needed; free plan,
+   Essential $9/mo), Withdrawly (Dutch; no login; instant email with
+   timestamp; free plan with unlimited withdrawals and custom sender name /
+   reply-to; 5.0 from 4 reviews). Many others exist.
+   If one is chosen, run ONE withdrawal function only: remove or unpublish
+   this repo's page and footer block, or re-point the footer button.
+2. **Own backend** (not now): endpoint + transactional email provider +
+   verified sender domain (SPF/DKIM) + Shopify Admin token to check the
+   order + abuse protection (open-relay risk) + a new data processor.
+   Roughly a day of work plus upkeep.
+3. **Manual reply** (interim): `policy-drafts/withdrawal-acknowledgement-email.md`.
+   Do not automate this with an LLM reading the form text and sending mail:
+   the free-text field is attacker-controlled (prompt injection).
+
+**App checklist:** Dutch storefront + email; works for guest checkout; email
+goes to the CUSTOMER at once with statement content and date/time (send a
+test and read it); sender address/reply-to; DPA/processor terms and data
+location; free-plan limits (one lists 10 withdrawals/month); works with this
+custom theme (app embed/app block — footer schema allows `@app`); data
+export and what happens on uninstall; no discount/"save the sale" step.
+
+**Timing:** the store has no orders and isn't registered yet, so nobody can
+validly withdraw today. Decide before launch.
+
+---
+
 ## 2026-09-30 — Withdrawal function built (footer button + fallback page)
 
 **Built on branch `claude/zen-hypatia-m2lclw`; NOT live until merged into the
@@ -42,8 +96,8 @@ The success message promises email confirmation, so until this is automated
 the owner must reply by hand, promptly, with the statement and its date/time.
 Automating it needs Shopify Flow or an app (none vetted). Also add the page
 link to the order confirmation/shipping emails (Settings > Notifications).
-Also still to verify: whether Shopify's native withdrawal feature (new
-customer accounts) already covers guests.
+(Earlier note about a possible native Shopify withdrawal feature was not
+confirmed — see the acknowledgement-email entry above.)
 
 **Verification done** (no Shopify storefront available in the sandbox):
 Shopify Theme Check on the whole theme — 12 offenses before and after, none
@@ -77,12 +131,11 @@ accounts* (Shopify-hosted, not themeable from this repo); guest checkout is
 allowed; `locales/nl.json` exists. No withdrawal/herroep strings exist
 anywhere in the theme.
 
-**Shopify native feature:** search summaries say Shopify launched a native
-EU right-of-withdrawal feature that requires new customer accounts (this
-store qualifies) and lives in the customer account / order history. Not
-verified: where it is switched on, and whether guests (no account) are
-covered. Check help.shopify.com "EU right of withdrawal compliance for
-merchants selling to EU customers" and the admin customer-accounts settings.
+**Shopify native feature:** one search summary claimed Shopify launched a
+native EU withdrawal feature for new customer accounts. LATER RESEARCH COULD
+NOT CONFIRM THIS (see the acknowledgement-email entry above): the Shopify
+help page seems to be guidance telling merchants to provide a function, and
+the only native piece found is for Managed Markets orders.
 
 **Placement options in this theme:**
 1. Footer button — `sections/footer-group.json`, section `footer_nav_H4mKqz`
@@ -101,9 +154,9 @@ merchants selling to EU customers" and the admin customer-accounts settings.
    at the function once it exists.
 Not suitable: header/announcement bar, product and cart pages.
 
-**Recommendation:** first check/enable Shopify's native feature; then add
-option 1 pointing at whichever flow works for guests (native if it does,
-else option 2 or a Shopify app — several exist, none vetted here).
+**Recommendation (superseded):** originally "check Shopify's native feature
+first"; since none could be confirmed, option 1 + option 2 were built, and
+the acknowledgement email needs an app (see the entry above).
 
 ---
 
