@@ -7,6 +7,56 @@ store check-in" routine) can pick up context without replaying this chat.
 
 ---
 
+## 2026-09-30 — Withdrawal ("cancellation") button: where it could go
+
+**Research only, nothing built or changed.**
+
+**Requirement (from secondary sources only — EUR-Lex, business.gov.nl,
+ACM and help.shopify.com are blocked from the sandbox; verify there):**
+Directive (EU) 2023/2673, applying from 19 June 2026: a two-step
+withdrawal function on the online interface. First control labelled
+"withdraw from contract here" (ACM, in Dutch: "hier de overeenkomst
+herroepen") or an unambiguous equivalent; second "confirm withdrawal
+here"; clearly visible and available for the whole 14-day withdrawal
+period; acknowledgement on a durable medium (email) with the statement
+and its date/time. Shopify community/app-vendor summaries say it must work
+without logging in — not confirmed from a primary source.
+
+**Store facts:** customer accounts are OPTIONAL and are *new customer
+accounts* (Shopify-hosted, not themeable from this repo); guest checkout is
+allowed; `locales/nl.json` exists. No withdrawal/herroep strings exist
+anywhere in the theme.
+
+**Shopify native feature:** search summaries say Shopify launched a native
+EU right-of-withdrawal feature that requires new customer accounts (this
+store qualifies) and lives in the customer account / order history. Not
+verified: where it is switched on, and whether guests (no account) are
+covered. Check help.shopify.com "EU right of withdrawal compliance for
+merchants selling to EU customers" and the admin customer-accounts settings.
+
+**Placement options in this theme:**
+1. Footer button — `sections/footer-group.json`, section `footer_nav_H4mKqz`
+   (its schema allows a `button` block; `footer_utilities_jLGE8U` is full:
+   max 3 blocks). Site-wide, cheapest. Or add a link to the `footer-company`
+   navigation menu in admin (no code, but a plain link).
+2. Dedicated page, e.g. `/pages/withdraw`: new `templates/page.withdrawal.json`
+   + new `sections/nexa-withdrawal.liquid` modelled on `nexa-contact.liquid`
+   (same dark styling, `{% form 'contact' %}`), two-step flow. GAP: Shopify's
+   contact form only emails the store, it sends no acknowledgement to the
+   customer, so a timestamped auto-reply needs Shopify Flow or an app.
+3. Order confirmation + shipping emails (admin > Settings > Notifications):
+   add the link. Not in the repo.
+4. Small extras: add a "Withdrawal" subject/link on the contact form
+   (`sections/nexa-contact.liquid:72-78`), and point the Refund policy draft
+   at the function once it exists.
+Not suitable: header/announcement bar, product and cart pages.
+
+**Recommendation:** first check/enable Shopify's native feature; then add
+option 1 pointing at whichever flow works for guests (native if it does,
+else option 2 or a Shopify app — several exist, none vetted here).
+
+---
+
 ## 2026-09-30 — Follow-up to audit: cleanup, policy drafts, Printful check
 
 **Done:**
@@ -40,8 +90,10 @@ were not read in full — verify directly.
   live. Either link them to Printful, or make them non-purchasable / keep
   the storefront password-protected until ready. Not changed.
 - **Cancellation button:** business.gov.nl says an obvious cancellation
-  button is required since 19 June 2026. Nothing in the theme or checkout
-  provides one. Needs a solution (app or custom page) before real sales.
+  button is required since 19 June 2026. Nothing in the theme *code*
+  provides one (grep-verified). Correction: I could not inspect the
+  Shopify-hosted checkout/customer accounts, so "nothing in checkout" was
+  unverified — see the placement entry above.
 - Policies above must go live before the store takes any order.
 
 ---
